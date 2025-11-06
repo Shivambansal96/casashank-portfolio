@@ -761,7 +761,10 @@ select.form-control {
     --shadow-heavy: rgba(0, 0, 0, 0.2);
     --gradient-primary: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
     --gradient-secondary: linear-gradient(135deg, #22d3ee 0%, #06b6d4 100%);
-    --neon-cyan: #00ffff;
+    /* --neon-cyan: #00ffff; */
+    --neon-cyan: #00d9ff;
+    --neon-purple: #a855f7;
+
     --neon-pink: #ff00ff;
     --neon-green: #00ff00;
 }
@@ -2063,6 +2066,31 @@ section {
     padding-top: 2rem;
     border-top: 1px solid var(--border-color);
     color: var(--text-secondary);
+}
+
+.footer-bottom p {
+  color: var(--text-secondary);
+  font-size: var(--font-size-base);
+  opacity: 0.8;
+}
+
+
+.shineverse-credit {
+  display: inline-block;
+  background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 700;
+  margin-left: 8px;
+  transition: all 0.3s ease;
+  /* border: solid 2px red; */
+  /* color: red; */
+}
+
+.shineverse-credit:hover {
+  transform: scale(1.05);
+  text-shadow: 0 0 20px rgba(0, 217, 255, 0.5);
 }
 
 /* Floating Action Buttons */

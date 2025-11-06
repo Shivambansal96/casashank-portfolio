@@ -1,44 +1,13 @@
 // Initialize
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     initTheme();
     initNavigation();
     initAnimations();
-    initCarousel();
     initForms();
     initScrollEffects();
     init3DTilt();
     initChangingText();
 });
-
-// function initChangingText() {
-//     const changingText = document.getElementById('changingText');
-//     const texts = [
-//         'Tax Expert',
-//         'Audit Professional',
-//         'GST Consultant',
-//         'Financial Advisor',
-//         'Compliance Specialist',
-//         'Business Partner'
-//     ];
-//     let currentIndex = 0;
-    
-//     function changeText() {
-//         changingText.style.opacity = '0';
-//         changingText.style.transform = 'translateY(-10px)';
-        
-//         setTimeout(() => {
-//             currentIndex = (currentIndex + 1) % texts.length;
-//             changingText.textContent = texts[currentIndex];
-            
-//             changingText.style.opacity = '1';
-//             changingText.style.transform = 'translateY(0)';
-//         }, 300);
-//     }
-    
-//     changingText.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
-    
-//     setInterval(changeText, 2000);
-// }
 
 function initChangingText() {
     const changingText = document.getElementById('changingText');
@@ -54,54 +23,48 @@ function initChangingText() {
     let charIndex = 0;
     let isDeleting = false;
     let typingSpeed = 100;
-    
+
     function typeText() {
         const currentText = texts[currentIndex];
-        
+
         if (!isDeleting) {
-            // Typing
             changingText.textContent = currentText.substring(0, charIndex + 1);
             charIndex++;
-            
+
             if (charIndex === currentText.length) {
-                // Finished typing, wait then start deleting
                 isDeleting = true;
-                typingSpeed = 2000; // Wait 2 seconds before deleting
+                typingSpeed = 2000;
             } else {
                 typingSpeed = 100;
             }
         } else {
-            // Deleting
             changingText.textContent = currentText.substring(0, charIndex - 1);
             charIndex--;
             typingSpeed = 50;
-            
+
             if (charIndex === 0) {
-                // Finished deleting, move to next text
                 isDeleting = false;
                 currentIndex = (currentIndex + 1) % texts.length;
-                typingSpeed = 500; // Wait before starting new text
+                typingSpeed = 500;
             }
         }
-        
+
         setTimeout(typeText, typingSpeed);
     }
-    
-    // Start the typing animation
+
     typeText();
 }
 
 // Theme Management
 function initTheme() {
     const themeToggle = document.getElementById('themeToggle');
-    const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
-    
-    themeToggle.addEventListener('click', function() {
+
+    themeToggle.addEventListener('click', function () {
         const theme = document.documentElement.getAttribute('data-theme');
         const newTheme = theme === 'dark' ? 'light' : 'dark';
-        
+
         document.documentElement.setAttribute('data-theme', newTheme);
-        
+
         const icon = themeToggle.querySelector('i');
         icon.className = newTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
     });
@@ -113,45 +76,40 @@ function initNavigation() {
     const navMenu = document.getElementById('navMenu');
     const navLinks = document.querySelectorAll('.nav-link');
     const navbar = document.getElementById('navbar');
-    
-    // Mobile menu toggle
-    mobileMenuToggle.addEventListener('click', function() {
+
+    mobileMenuToggle.addEventListener('click', function () {
         this.classList.toggle('active');
         navMenu.classList.toggle('active');
     });
-    
-    // Close mobile menu on link click
+
     navLinks.forEach(link => {
-        link.addEventListener('click', function() {
+        link.addEventListener('click', function () {
             mobileMenuToggle.classList.remove('active');
             navMenu.classList.remove('active');
-            
-            // Update active link
+
             navLinks.forEach(l => l.classList.remove('active'));
             this.classList.add('active');
         });
     });
-    
-    // Navbar scroll effect
-    window.addEventListener('scroll', function() {
+
+    window.addEventListener('scroll', function () {
         if (window.scrollY > 50) {
             navbar.classList.add('scrolled');
         } else {
             navbar.classList.remove('scrolled');
         }
     });
-    
-    // Highlight active section
+
     const sections = document.querySelectorAll('section[id]');
-    
-    window.addEventListener('scroll', function() {
+
+    window.addEventListener('scroll', function () {
         const scrollY = window.pageYOffset;
-        
+
         sections.forEach(section => {
             const sectionHeight = section.offsetHeight;
             const sectionTop = section.offsetTop - 100;
             const sectionId = section.getAttribute('id');
-            
+
             if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
                 navLinks.forEach(link => {
                     link.classList.remove('active');
@@ -166,12 +124,11 @@ function initNavigation() {
 
 // Animations
 function initAnimations() {
-    // Animated counters
     const counters = document.querySelectorAll('.stat-number[data-count]');
     const observerOptions = {
         threshold: 0.5
     };
-    
+
     const counterObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -181,29 +138,11 @@ function initAnimations() {
             }
         });
     }, observerOptions);
-    
+
     counters.forEach(counter => counterObserver.observe(counter));
-    
-    // Progress bars
-    const progressBars = document.querySelectorAll('.progress-fill[data-progress]');
-    
-    const progressObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const progress = entry.target.getAttribute('data-progress');
-                setTimeout(() => {
-                    entry.target.style.width = progress + '%';
-                }, 200);
-                progressObserver.unobserve(entry.target);
-            }
-        });
-    }, observerOptions);
-    
-    progressBars.forEach(bar => progressObserver.observe(bar));
-    
-    // AOS (Animate on Scroll)
+
     const aosElements = document.querySelectorAll('[data-aos]');
-    
+
     const aosObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -211,7 +150,7 @@ function initAnimations() {
             }
         });
     }, { threshold: 0.1 });
-    
+
     aosElements.forEach(el => aosObserver.observe(el));
 }
 
@@ -220,48 +159,17 @@ function animateCounter(element, target) {
     const increment = target / 50;
     const duration = 2000;
     const stepTime = duration / 50;
-    
+
     const timer = setInterval(() => {
         current += increment;
         if (current >= target) {
-            element.textContent = target + (target >= 100 ? '+' : '');
+            element.textContent = target + '+';
             clearInterval(timer);
         } else {
             element.textContent = Math.floor(current);
         }
     }, stepTime);
 }
-
-// Skills Filter
-const filterBtns = document.querySelectorAll('.filter-btn');
-const skillCards = document.querySelectorAll('.skill-card');
-
-filterBtns.forEach(btn => {
-    btn.addEventListener('click', function() {
-        const filter = this.getAttribute('data-filter');
-        
-        filterBtns.forEach(b => b.classList.remove('active'));
-        this.classList.add('active');
-        
-        skillCards.forEach(card => {
-            const category = card.getAttribute('data-category');
-            
-            if (filter === 'all' || category === filter) {
-                card.style.display = 'block';
-                setTimeout(() => {
-                    card.style.opacity = '1';
-                    card.style.transform = 'scale(1)';
-                }, 10);
-            } else {
-                card.style.opacity = '0';
-                card.style.transform = 'scale(0.8)';
-                setTimeout(() => {
-                    card.style.display = 'none';
-                }, 300);
-            }
-        });
-    });
-});
 
 // Service Modal
 const serviceDetails = {
@@ -320,6 +228,146 @@ const serviceDetails = {
             'Mergers & Acquisitions Advisory',
             'Startup Financial Consulting'
         ]
+    },
+    5: {
+        title: 'Transfer Pricing',
+        description: 'Expert transfer pricing services ensuring compliance with regulations for multinational transactions.',
+        features: [
+            'Transfer Pricing Documentation',
+            'Benchmarking Analysis',
+            'Country-by-Country Reporting',
+            'Master File Preparation',
+            'Advance Pricing Agreements',
+            'Transfer Pricing Audits',
+            'Dispute Resolution',
+            'Compliance Advisory'
+        ]
+    },
+    6: {
+        title: 'Company Registration',
+        description: 'Complete assistance for company formation and registration across various business structures in India.',
+        features: [
+            'Private Limited Company Registration',
+            'Public Limited Company Registration',
+            'One Person Company (OPC)',
+            'Limited Liability Partnership (LLP)',
+            'Partnership Firm Registration',
+            'Sole Proprietorship Setup',
+            'Digital Signature Certificate',
+            'Director Identification Number'
+        ]
+    },
+    7: {
+        title: 'Bookkeeping & Accounting',
+        description: 'Professional bookkeeping and accounting services to maintain accurate financial records for your business.',
+        features: [
+            'Daily Transaction Recording',
+            'Bank Reconciliation',
+            'Accounts Payable Management',
+            'Accounts Receivable Management',
+            'Financial Statements Preparation',
+            'General Ledger Maintenance',
+            'Payroll Processing',
+            'Expense Management'
+        ]
+    },
+    8: {
+        title: 'Payroll Management',
+        description: 'Efficient payroll processing and compliance management solutions for businesses of all sizes.',
+        features: [
+            'Salary Processing',
+            'Provident Fund (PF) Compliance',
+            'Employee State Insurance (ESI)',
+            'Professional Tax (PT)',
+            'Income Tax Deductions (TDS)',
+            'Form 16 Generation',
+            'Payroll Reports',
+            'Statutory Compliance'
+        ]
+    },
+    9: {
+        title: 'Business Consultation',
+        description: 'Strategic business consulting services to help your business grow and achieve operational excellence.',
+        features: [
+            'Business Strategy Planning',
+            'Market Entry Strategy',
+            'Operational Efficiency',
+            'Cost Optimization',
+            'Growth Strategy',
+            'Business Process Improvement',
+            'Performance Management',
+            'Change Management'
+        ]
+    },
+    10: {
+        title: 'Corporate Compliance',
+        description: 'Comprehensive corporate compliance services ensuring your business meets all regulatory requirements.',
+        features: [
+            'ROC Compliance',
+            'Annual Filing Requirements',
+            'Board Meeting Minutes',
+            'Statutory Register Maintenance',
+            'Share Transfer Procedures',
+            'Director Appointments',
+            'Company Law Compliance',
+            'Secretarial Services'
+        ]
+    },
+    11: {
+        title: 'Litigation Support',
+        description: 'Expert representation and support in tax disputes, appeals, and legal proceedings.',
+        features: [
+            'Income Tax Appeals',
+            'GST Litigation',
+            'Tax Dispute Resolution',
+            'Representation before Authorities',
+            'Advance Rulings',
+            'Settlement Commission',
+            'Tribunal Proceedings',
+            'Legal Opinion'
+        ]
+    },
+    12: {
+        title: 'Business Taxation',
+        description: 'Comprehensive taxation services for businesses covering all aspects of direct and indirect taxes.',
+        features: [
+            'Corporate Tax Planning',
+            'Business Tax Returns',
+            'Tax Compliance Management',
+            'Withholding Tax Services',
+            'International Taxation',
+            'Cross-border Transactions',
+            'Tax Efficiency Strategies',
+            'Tax Health Check'
+        ]
+    },
+    13: {
+        title: 'Taxation of Expatriates',
+        description: 'Specialized tax planning and compliance services for expatriates working in India.',
+        features: [
+            'Residential Status Determination',
+            'Tax Liability Assessment',
+            'Foreign Income Taxation',
+            'Double Taxation Avoidance',
+            'Form 67 Filing',
+            'Salary Structuring',
+            'Retirement Benefits',
+            'Exit Tax Planning'
+        ]
+    },
+    14: {
+        title: 'Foreign Investment Approvals',
+        description: 'Expert guidance on FDI regulations, compliance, and approval processes in India.',
+        features: [
+            'FDI Policy Advisory',
+            'FEMA Compliance',
+            'RBI Approvals',
+            'Foreign Investment Structuring',
+            'Repatriation Services',
+            'ODI (Outbound Investment)',
+            'ECB (External Commercial Borrowings)',
+            'Investment Documentation'
+        ]
     }
 };
 
@@ -327,7 +375,7 @@ function openServiceModal(id) {
     const modal = document.getElementById('serviceModal');
     const modalBody = document.getElementById('modalBody');
     const service = serviceDetails[id];
-    
+
     modalBody.innerHTML = `
         <h2 style="margin-bottom: 1rem; color: var(--text-primary);">${service.title}</h2>
         <p style="color: var(--text-secondary); margin-bottom: 2rem; line-height: 1.8;">${service.description}</p>
@@ -346,7 +394,7 @@ function openServiceModal(id) {
             </a>
         </div>
     `;
-    
+
     modal.classList.add('active');
 }
 
@@ -355,159 +403,20 @@ function closeServiceModal() {
     modal.classList.remove('active');
 }
 
-// Close modal on outside click
-document.getElementById('serviceModal').addEventListener('click', function(e) {
+document.getElementById('serviceModal').addEventListener('click', function (e) {
     if (e.target === this) {
         closeServiceModal();
     }
 });
 
-// Testimonials Carousel
-let currentSlide = 0;
-const testimonials = [
-    {
-        name: 'Vikram Singh',
-        company: 'Tech Innovation Ltd',
-        position: 'CEO',
-        feedback: 'Exceptional CA who transformed our financial management! His expertise in tax planning saved us significant costs.',
-        rating: 5
-    },
-    {
-        name: 'Priya Sharma',
-        company: 'Manufacturing & Co.',
-        position: 'Finance Director',
-        feedback: 'Professional, timely, and extremely knowledgeable. Best decision we made was hiring Sashank for our audits.',
-        rating: 5
-    }
-];
-
-function initCarousel() {
-    renderTestimonials();
-    updateCarousel();
-}
-
-function renderTestimonials() {
-    const track = document.getElementById('testimonialTrack');
-    const indicators = document.getElementById('carouselIndicators');
-    
-    track.innerHTML = testimonials.map((testimonial, index) => `
-        <div class="testimonial-card glass-effect">
-            <div class="testimonial-header">
-                <div class="testimonial-info">
-                    <h4>${testimonial.name}</h4>
-                    <p>${testimonial.position}, ${testimonial.company}</p>
-                </div>
-                <div class="testimonial-rating">
-                    ${'⭐'.repeat(testimonial.rating)}
-                </div>
-            </div>
-            <p class="testimonial-feedback">"${testimonial.feedback}"</p>
-        </div>
-    `).join('');
-    
-    indicators.innerHTML = testimonials.map((_, index) => `
-        <span class="indicator ${index === 0 ? 'active' : ''}" onclick="goToSlide(${index})"></span>
-    `).join('');
-}
-
-function updateCarousel() {
-    const track = document.getElementById('testimonialTrack');
-    const indicators = document.querySelectorAll('.indicator');
-    const cardWidth = 350;
-    const gap = 32;
-    
-    track.style.transform = `translateX(-${currentSlide * (cardWidth + gap)}px)`;
-    
-    indicators.forEach((indicator, index) => {
-        indicator.classList.toggle('active', index === currentSlide);
-    });
-}
-
-function moveCarousel(direction) {
-    const maxSlide = testimonials.length - 1;
-    currentSlide = Math.max(0, Math.min(maxSlide, currentSlide + direction));
-    updateCarousel();
-}
-
-function goToSlide(index) {
-    currentSlide = index;
-    updateCarousel();
-}
-
-// Touch swipe for carousel
-let touchStartX = 0;
-let touchEndX = 0;
-
-const carouselContainer = document.querySelector('.carousel-container');
-
-if (carouselContainer) {
-    carouselContainer.addEventListener('touchstart', e => {
-        touchStartX = e.changedTouches[0].screenX;
-    });
-    
-    carouselContainer.addEventListener('touchend', e => {
-        touchEndX = e.changedTouches[0].screenX;
-        handleSwipe();
-    });
-}
-
-function handleSwipe() {
-    if (touchEndX < touchStartX - 50) {
-        moveCarousel(1);
-    }
-    if (touchEndX > touchStartX + 50) {
-        moveCarousel(-1);
-    }
-}
-
 // Forms
 function initForms() {
-    // Feedback form
-    const feedbackForm = document.getElementById('feedbackForm');
-    if (feedbackForm) {
-        feedbackForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const name = document.getElementById('feedbackName').value;
-            const company = document.getElementById('feedbackCompany').value;
-            const position = document.getElementById('feedbackPosition').value;
-            const rating = parseInt(document.getElementById('feedbackRating').value);
-            const message = document.getElementById('feedbackMessage').value;
-            
-            const newTestimonial = {
-                name: name,
-                company: company,
-                position: position,
-                feedback: message,
-                rating: rating
-            };
-            
-            testimonials.push(newTestimonial);
-            renderTestimonials();
-            
-            // Show success message
-            alert('Thank you for your feedback! Your testimonial has been added.');
-            
-            // Reset form
-            feedbackForm.reset();
-            
-            // Scroll to new testimonial
-            currentSlide = testimonials.length - 1;
-            updateCarousel();
-        });
-    }
-    
-    // Contact form - FormSubmit handles the submission
-    // We just need to show loading state
     const contactForm = document.getElementById('contactForm');
     if (contactForm) {
-        contactForm.addEventListener('submit', function(e) {
+        contactForm.addEventListener('submit', function (e) {
             const submitBtn = contactForm.querySelector('.btn-submit');
             submitBtn.classList.add('loading');
             submitBtn.disabled = true;
-            
-            // FormSubmit will handle the actual submission and redirect
-            // No need to prevent default as we want the form to submit normally
         });
     }
 }
@@ -515,16 +424,16 @@ function initForms() {
 // Scroll Effects
 function initScrollEffects() {
     const scrollTopBtn = document.getElementById('scrollTop');
-    
-    window.addEventListener('scroll', function() {
+
+    window.addEventListener('scroll', function () {
         if (window.scrollY > 300) {
             scrollTopBtn.classList.add('visible');
         } else {
             scrollTopBtn.classList.remove('visible');
         }
     });
-    
-    scrollTopBtn.addEventListener('click', function() {
+
+    scrollTopBtn.addEventListener('click', function () {
         window.scrollTo({
             top: 0,
             behavior: 'smooth'
@@ -535,35 +444,98 @@ function initScrollEffects() {
 // 3D Tilt Effect
 function init3DTilt() {
     const tiltElements = document.querySelectorAll('[data-tilt]');
-    
+
     tiltElements.forEach(element => {
-        element.addEventListener('mousemove', function(e) {
+        element.addEventListener('mousemove', function (e) {
             const rect = element.getBoundingClientRect();
             const x = e.clientX - rect.left;
             const y = e.clientY - rect.top;
-            
+
             const centerX = rect.width / 2;
             const centerY = rect.height / 2;
-            
+
             const rotateX = ((y - centerY) / centerY) * 10;
             const rotateY = ((centerX - x) / centerX) * 10;
-            
+
             element.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.05, 1.05, 1.05)`;
         });
-        
-        element.addEventListener('mouseleave', function() {
+
+        element.addEventListener('mouseleave', function () {
             element.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
         });
     });
 }
 
 // Parallax effect for floating shapes
-window.addEventListener('scroll', function() {
+window.addEventListener('scroll', function () {
     const scrolled = window.pageYOffset;
     const shapes = document.querySelectorAll('.shape');
-    
+
     shapes.forEach((shape, index) => {
         const speed = 0.5 + (index * 0.1);
         shape.style.transform = `translateY(${scrolled * speed}px)`;
     });
 });
+
+// Office Hours Status
+function updateOfficeStatus() {
+    const statusElement = document.getElementById('officeStatus');
+    if (!statusElement) return;
+
+    const now = new Date();
+    const day = now.getDay(); // 0 = Sunday, 6 = Saturday
+    const hours = now.getHours();
+    const minutes = now.getMinutes();
+    const currentTime = hours * 60 + minutes;
+
+    let isOpen = false;
+    let statusText = '';
+    let responseTime = '';
+
+    // Check if currently open
+    if (day === 0) {
+        // Sunday - Closed
+        isOpen = false;
+        statusText = 'Closed';
+        responseTime = 'Opens Monday 10:00 AM';
+    } else if (day === 6) {
+        // Saturday: 10 AM - 2 PM
+        const openTime = 10 * 60; // 10:00 AM
+        const closeTime = 14 * 60; // 2:00 PM
+
+        if (currentTime >= openTime && currentTime < closeTime) {
+            isOpen = true;
+            statusText = 'Open Now';
+            responseTime = 'Within 4 hours';
+        } else {
+            isOpen = false;
+            statusText = 'Closed';
+            responseTime = day === 6 && currentTime >= closeTime ? 'Opens Monday 10:00 AM' : 'Opens at 10:00 AM';
+        }
+    } else {
+        // Monday - Friday: 10 AM - 6 PM
+        const openTime = 10 * 60; // 10:00 AM
+        const closeTime = 18 * 60; // 6:00 PM
+
+        if (currentTime >= openTime && currentTime < closeTime) {
+            isOpen = true;
+            statusText = 'Open Now';
+            // responseTime = 'Within 4 hours';
+        } else {
+            isOpen = false;
+            statusText = 'Closed';
+            if (currentTime < openTime) {
+                responseTime = 'Opens at 10:00 AM';
+            } else {
+                responseTime = day === 5 ? 'Opens Monday 10:00 AM' : 'Opens tomorrow 10:00 AM';
+            }
+        }
+    }
+    statusElement.className = `office-status ${isOpen ? 'open' : 'closed'}`;
+    statusElement.innerHTML = isOpen
+        ? statusText
+        : `${statusText} <span class="response-time">• ${responseTime}</span>`;
+}
+// Update office status on load and every minute
+updateOfficeStatus();
+setInterval(updateOfficeStatus, 60000);

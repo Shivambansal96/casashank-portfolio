@@ -7,7 +7,42 @@ document.addEventListener('DOMContentLoaded', function() {
     initForms();
     initScrollEffects();
     init3DTilt();
+    initChangingText();
 });
+
+function initChangingText() {
+    const changingText = document.getElementById('changingText');
+    const texts = [
+        'Tax Expert',
+        'Audit Professional',
+        'GST Consultant',
+        'Financial Advisor',
+        'Compliance Specialist',
+        'Business Partner'
+    ];
+    let currentIndex = 0;
+    
+    function changeText() {
+        // Fade out
+        changingText.style.opacity = '0';
+        changingText.style.transform = 'translateY(-10px)';
+        
+        setTimeout(() => {
+            currentIndex = (currentIndex + 1) % texts.length;
+            changingText.textContent = texts[currentIndex];
+            
+            // Fade in
+            changingText.style.opacity = '1';
+            changingText.style.transform = 'translateY(0)';
+        }, 300);
+    }
+    
+    // Initial style
+    changingText.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+    
+    // Change text every 2 seconds
+    setInterval(changeText, 2000);
+}
 
 // Theme Management
 function initTheme() {

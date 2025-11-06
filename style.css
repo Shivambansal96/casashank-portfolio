@@ -2418,3 +2418,67 @@ section {
         page-break-inside: avoid;
     }
 }
+
+/* Hero Section */
+.hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 8rem 2rem 4rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.hero-gradient {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(ellipse at top left, rgba(6, 182, 212, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at top right, rgba(8, 145, 178, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at bottom, rgba(34, 211, 238, 0.1) 0%, transparent 50%);
+    animation: gradientMove 15s ease infinite;
+}
+
+@keyframes gradientMove {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.8; transform: scale(1.1); }
+}
+
+.hero-pattern {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        linear-gradient(rgba(6, 182, 212, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(6, 182, 212, 0.03) 1px, transparent 1px);
+    background-size: 50px 50px;
+    animation: patternMove 20s linear infinite;
+}
+
+@keyframes patternMove {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(50px, 50px); }
+}
+
+[data-theme="dark"] .hero-gradient {
+    background: radial-gradient(ellipse at top left, rgba(34, 211, 238, 0.12) 0%, transparent 50%),
+                radial-gradient(ellipse at top right, rgba(6, 182, 212, 0.12) 0%, transparent 50%),
+                radial-gradient(ellipse at bottom, rgba(8, 145, 178, 0.08) 0%, transparent 50%);
+}
+
+[data-theme="dark"] .hero-pattern {
+    background-image: 
+        linear-gradient(rgba(34, 211, 238, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(34, 211, 238, 0.05) 1px, transparent 1px);
+}

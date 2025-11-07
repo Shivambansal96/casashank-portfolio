@@ -723,7 +723,7 @@ section {
 
 /* Rotating Cube */
 .about-cube {
-    perspective: 1000px;
+    perspective: 700px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -731,11 +731,14 @@ section {
 }
 
 .rotating-cube {
-    width: 200px;
-    height: 200px;
+
+    /* border: solid 2px red; */
+    /* background-color: rgba(255, 0, 0, 0.05); */
+    width: 500px;
+    height: 620px;
     position: relative;
     transform-style: preserve-3d;
-    animation: rotateCube 20s infinite linear;
+    animation: rotateCube 8s infinite linear;
 }
 
 .cube-face {
@@ -915,13 +918,35 @@ section {
 .clients-carousel {
     /* overflow: hidden; */
     position: relative;
+    /* border: solid 2px greenyellow; */
+    /* display: flex;
+    justify-content: center;
+    align-items: center; */
+
+    /* height: 75px; */
+    /* width: 100%; */
     
 }
 
+
+#NHIA_client img {
+    height:  80px;
+    width: 180px;
+}
+
+#Cisco_client img {
+    height:  80px;
+    width: 180px;
+}
+
 .clients-track {
-    margin-top: 60px;
+    /* margin-top: 100px; */
     display: flex;
-    animation: clientsScroll 15s linear infinite;
+    /* justify-content: center;
+    align-items:center; */
+
+    /* border: solid 2px red; */
+    animation: clientsScroll 10s linear infinite;
 }
 
 .client-logo {
@@ -933,10 +958,11 @@ section {
     justify-content: center;
     align-items: center;
     /* transform: scale3d(32, 42, 13)5; */
-    transform: scale(1.2);
+    /* transform: scale(1.2); */
     /* scale: 1.2; */
     margin: 0 2rem;
-    padding: 1rem;
+    padding: .1rem;
+    /* background: transparent; */
     background: white;
     border-radius: 12px;
     box-shadow: 0 4px 15px var(--shadow-light);
@@ -944,8 +970,8 @@ section {
 }
 
 .client-logo:hover {
-    transform: scale(1.1);
-    cursor: crosshair;
+    transform: scale(1.5);
+    cursor: pointer;
     transition: all 0.5s ease-out;
 
 }
@@ -953,7 +979,7 @@ section {
 .client-logo img {
     max-width: 100%;
     max-height: 100%;
-    object-fit: contain;
+    object-fit: cover;
     /* filter: grayscale(1); */
     opacity: 1;
     transition: all 0.3s ease;

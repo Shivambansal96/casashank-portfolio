@@ -501,7 +501,7 @@ function updateOfficeStatus() {
     } else if (day === 6) {
         // Saturday: 10 AM - 2 PM
         const openTime = 10 * 60; // 10:00 AM
-        const closeTime = 14 * 60; // 2:00 PM
+        const closeTime = 22 * 60; // 9:00 PM
 
         if (currentTime >= openTime && currentTime < closeTime) {
             isOpen = true;
@@ -513,9 +513,9 @@ function updateOfficeStatus() {
             responseTime = day === 6 && currentTime >= closeTime ? 'Opens Monday 10:00 AM' : 'Opens at 10:00 AM';
         }
     } else {
-        // Monday - Friday: 10 AM - 6 PM
+        // Monday - Friday: 10 AM - 9 PM
         const openTime = 10 * 60; // 10:00 AM
-        const closeTime = 18 * 60; // 6:00 PM
+        const closeTime = 22 * 60; // 9:00 PM
 
         if (currentTime >= openTime && currentTime < closeTime) {
             isOpen = true;
@@ -527,7 +527,8 @@ function updateOfficeStatus() {
             if (currentTime < openTime) {
                 responseTime = 'Opens at 10:00 AM';
             } else {
-                responseTime = day === 5 ? 'Opens Monday 10:00 AM' : 'Opens tomorrow 10:00 AM';
+                // responseTime = day === 5 ? 'Opens Monday 10:00 AM' : 'Opens tomorrow 10:00 AM';
+                responseTime = 'Opens tomorrow 10:00 AM';
             }
         }
     }

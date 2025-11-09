@@ -7,7 +7,9 @@ document.addEventListener('DOMContentLoaded', function () {
     initScrollEffects();
     init3DTilt();
     initChangingText();
+    initSeamlessMarquees();
 });
+
 
 function initChangingText() {
     const changingText = document.getElementById('changingText');
@@ -24,12 +26,15 @@ function initChangingText() {
     let isDeleting = false;
     let typingSpeed = 100;
 
+
     function typeText() {
         const currentText = texts[currentIndex];
+
 
         if (!isDeleting) {
             changingText.textContent = currentText.substring(0, charIndex + 1);
             charIndex++;
+
 
             if (charIndex === currentText.length) {
                 isDeleting = true;
@@ -42,6 +47,7 @@ function initChangingText() {
             charIndex--;
             typingSpeed = 50;
 
+
             if (charIndex === 0) {
                 isDeleting = false;
                 currentIndex = (currentIndex + 1) % texts.length;
@@ -49,26 +55,50 @@ function initChangingText() {
             }
         }
 
+
         setTimeout(typeText, typingSpeed);
     }
 
+
     typeText();
 }
+
+// Initialize seamless marquees for services and clients
+function initSeamlessMarquees() {
+    // Services Marquee
+    const servicesMarquee = document.getElementById('servicesMarquee');
+    if (servicesMarquee) {
+        const servicesContent = servicesMarquee.innerHTML;
+        servicesMarquee.innerHTML = servicesContent + servicesContent;
+    }
+
+    // Clients Track
+    const clientsTrack = document.getElementById('clientsTrack');
+    if (clientsTrack) {
+        const clientsContent = clientsTrack.innerHTML;
+        clientsTrack.innerHTML = clientsContent + clientsContent;
+    }
+}
+
 
 // Theme Management
 function initTheme() {
     const themeToggle = document.getElementById('themeToggle');
 
+
     themeToggle.addEventListener('click', function () {
         const theme = document.documentElement.getAttribute('data-theme');
         const newTheme = theme === 'dark' ? 'light' : 'dark';
 
+
         document.documentElement.setAttribute('data-theme', newTheme);
+
 
         const icon = themeToggle.querySelector('i');
         icon.className = newTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
     });
 }
+
 
 // Navigation
 function initNavigation() {
@@ -77,20 +107,24 @@ function initNavigation() {
     const navLinks = document.querySelectorAll('.nav-link');
     const navbar = document.getElementById('navbar');
 
+
     mobileMenuToggle.addEventListener('click', function () {
         this.classList.toggle('active');
         navMenu.classList.toggle('active');
     });
+
 
     navLinks.forEach(link => {
         link.addEventListener('click', function () {
             mobileMenuToggle.classList.remove('active');
             navMenu.classList.remove('active');
 
+
             navLinks.forEach(l => l.classList.remove('active'));
             this.classList.add('active');
         });
     });
+
 
     window.addEventListener('scroll', function () {
         if (window.scrollY > 50) {
@@ -100,15 +134,19 @@ function initNavigation() {
         }
     });
 
+
     const sections = document.querySelectorAll('section[id]');
+
 
     window.addEventListener('scroll', function () {
         const scrollY = window.pageYOffset;
+
 
         sections.forEach(section => {
             const sectionHeight = section.offsetHeight;
             const sectionTop = section.offsetTop - 100;
             const sectionId = section.getAttribute('id');
+
 
             if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
                 navLinks.forEach(link => {
@@ -122,12 +160,14 @@ function initNavigation() {
     });
 }
 
+
 // Animations
 function initAnimations() {
     const counters = document.querySelectorAll('.stat-number[data-count]');
     const observerOptions = {
         threshold: 0.5
     };
+
 
     const counterObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -139,9 +179,12 @@ function initAnimations() {
         });
     }, observerOptions);
 
+
     counters.forEach(counter => counterObserver.observe(counter));
 
+
     const aosElements = document.querySelectorAll('[data-aos]');
+
 
     const aosObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -151,14 +194,17 @@ function initAnimations() {
         });
     }, { threshold: 0.1 });
 
+
     aosElements.forEach(el => aosObserver.observe(el));
 }
+
 
 function animateCounter(element, target) {
     let current = 0;
     const increment = target / 50;
     const duration = 2000;
     const stepTime = duration / 50;
+
 
     const timer = setInterval(() => {
         current += increment;
@@ -170,6 +216,7 @@ function animateCounter(element, target) {
         }
     }, stepTime);
 }
+
 
 // Service Modal
 const serviceDetails = {
@@ -371,10 +418,12 @@ const serviceDetails = {
     }
 };
 
+
 function openServiceModal(id) {
     const modal = document.getElementById('serviceModal');
     const modalBody = document.getElementById('modalBody');
     const service = serviceDetails[id];
+
 
     modalBody.innerHTML = `
         <h2 style="margin-bottom: 1rem; color: var(--text-primary);">${service.title}</h2>
@@ -395,19 +444,23 @@ function openServiceModal(id) {
         </div>
     `;
 
+
     modal.classList.add('active');
 }
+
 
 function closeServiceModal() {
     const modal = document.getElementById('serviceModal');
     modal.classList.remove('active');
 }
 
+
 document.getElementById('serviceModal').addEventListener('click', function (e) {
     if (e.target === this) {
         closeServiceModal();
     }
 });
+
 
 // Forms
 function initForms() {
@@ -421,9 +474,11 @@ function initForms() {
     }
 }
 
+
 // Scroll Effects
 function initScrollEffects() {
     const scrollTopBtn = document.getElementById('scrollTop');
+
 
     window.addEventListener('scroll', function () {
         if (window.scrollY > 300) {
@@ -433,6 +488,7 @@ function initScrollEffects() {
         }
     });
 
+
     scrollTopBtn.addEventListener('click', function () {
         window.scrollTo({
             top: 0,
@@ -441,9 +497,11 @@ function initScrollEffects() {
     });
 }
 
+
 // 3D Tilt Effect
 function init3DTilt() {
     const tiltElements = document.querySelectorAll('[data-tilt]');
+
 
     tiltElements.forEach(element => {
         element.addEventListener('mousemove', function (e) {
@@ -451,14 +509,18 @@ function init3DTilt() {
             const x = e.clientX - rect.left;
             const y = e.clientY - rect.top;
 
+
             const centerX = rect.width / 2;
             const centerY = rect.height / 2;
+
 
             const rotateX = ((y - centerY) / centerY) * 10;
             const rotateY = ((centerX - x) / centerX) * 10;
 
+
             element.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.05, 1.05, 1.05)`;
         });
+
 
         element.addEventListener('mouseleave', function () {
             element.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
@@ -466,10 +528,12 @@ function init3DTilt() {
     });
 }
 
+
 // Parallax effect for floating shapes
 window.addEventListener('scroll', function () {
     const scrolled = window.pageYOffset;
     const shapes = document.querySelectorAll('.shape');
+
 
     shapes.forEach((shape, index) => {
         const speed = 0.5 + (index * 0.1);
@@ -477,10 +541,12 @@ window.addEventListener('scroll', function () {
     });
 });
 
+
 // Office Hours Status
 function updateOfficeStatus() {
     const statusElement = document.getElementById('officeStatus');
     if (!statusElement) return;
+
 
     const now = new Date();
     const day = now.getDay(); // 0 = Sunday, 6 = Saturday
@@ -488,9 +554,11 @@ function updateOfficeStatus() {
     const minutes = now.getMinutes();
     const currentTime = hours * 60 + minutes;
 
+
     let isOpen = false;
     let statusText = '';
     let responseTime = '';
+
 
     // Check if currently open
     if (day === 0) {
@@ -499,9 +567,10 @@ function updateOfficeStatus() {
         statusText = 'Closed';
         responseTime = 'Opens Monday 10:00 AM';
     } else if (day === 6) {
-        // Saturday: 10 AM - 2 PM
+        // Saturday: 10 AM - 9 PM
         const openTime = 10 * 60; // 10:00 AM
         const closeTime = 22 * 60; // 9:00 PM
+
 
         if (currentTime >= openTime && currentTime < closeTime) {
             isOpen = true;
@@ -517,17 +586,16 @@ function updateOfficeStatus() {
         const openTime = 10 * 60; // 10:00 AM
         const closeTime = 22 * 60; // 9:00 PM
 
+
         if (currentTime >= openTime && currentTime < closeTime) {
             isOpen = true;
             statusText = 'Open Now';
-            // responseTime = 'Within 4 hours';
         } else {
             isOpen = false;
             statusText = 'Closed';
             if (currentTime < openTime) {
                 responseTime = 'Opens at 10:00 AM';
             } else {
-                // responseTime = day === 5 ? 'Opens Monday 10:00 AM' : 'Opens tomorrow 10:00 AM';
                 responseTime = 'Opens tomorrow 10:00 AM';
             }
         }
@@ -537,6 +605,23 @@ function updateOfficeStatus() {
         ? statusText
         : `${statusText} <span class="response-time">• ${responseTime}</span>`;
 }
+
 // Update office status on load and every minute
 updateOfficeStatus();
 setInterval(updateOfficeStatus, 60000);
+
+// Duplicate clients once for seamless -50% loop, without changing source data
+(function () {
+  const track = document.querySelector('.clients-track');
+  if (!track || track.dataset.duplicated === 'true') return;
+
+  const clones = track.cloneNode(true);
+  // Move children from the clone into the original as aria-hidden clones
+  Array.from(clones.children).forEach(node => {
+    const clone = node.cloneNode(true);
+    clone.setAttribute('aria-hidden', 'true');
+    track.appendChild(clone);
+  });
+
+  track.dataset.duplicated = 'true';
+})();

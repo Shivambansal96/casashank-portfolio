@@ -277,17 +277,17 @@ const serviceDetails = {
         ]
     },
     5: {
-        title: 'Transfer Pricing',
-        description: 'Expert transfer pricing services ensuring compliance with regulations for multinational transactions.',
+        title: 'Retainership Services',
+        description: 'Our retainership services offer continuous financial, tax, and compliance support to ensure your business operates smoothly and remains compliant throughout the year.',
         features: [
-            'Transfer Pricing Documentation',
-            'Benchmarking Analysis',
-            'Country-by-Country Reporting',
-            'Master File Preparation',
-            'Advance Pricing Agreements',
-            'Transfer Pricing Audits',
-            'Dispute Resolution',
-            'Compliance Advisory'
+            'Dedicated financial and compliance advisory support',
+            'Monthly or quarterly compliance reviews',
+            'Tax and regulatory updates',
+            'Payroll and accounting oversight',
+            'Ongoing business performance tracking',
+            'Routine financial reporting and analysis',
+            'Legal and statutory compliance monitoring',
+            'Priority assistance for audits and assessments'
         ]
     },
     6: {
@@ -389,19 +389,19 @@ const serviceDetails = {
         ]
     },
     13: {
-        title: 'Taxation of Expatriates',
-        description: 'Specialized tax planning and compliance services for expatriates working in India.',
-        features: [
-            'Residential Status Determination',
-            'Tax Liability Assessment',
-            'Foreign Income Taxation',
-            'Double Taxation Avoidance',
-            'Form 67 Filing',
-            'Salary Structuring',
-            'Retirement Benefits',
-            'Exit Tax Planning'
-        ]
-    },
+    title: 'Trust & NGO Services',
+    description: 'Specialized services for trusts, societies, and NGOs, focusing on proper structuring, registration, and regulatory compliance to help achieve your charitable goals effectively.',
+    features: [
+        'Formation and registration of Trusts, Societies, and NGOs',
+        'Compliance with FCRA, Income Tax, and other regulations',
+        'Maintenance of statutory records and returns',
+        'Financial statement preparation and audit support',
+        'Advisory on donations, grants, and CSR funding',
+        'Governance and internal control guidance',
+        'Assistance with 12A, 80G, and CSR registration',
+        'Strategic planning for sustainable growth'
+    ]
+},
     14: {
         title: 'Foreign Investment Approvals',
         description: 'Expert guidance on FDI regulations, compliance, and approval processes in India.',
@@ -612,16 +612,16 @@ setInterval(updateOfficeStatus, 60000);
 
 // Duplicate clients once for seamless -50% loop, without changing source data
 (function () {
-  const track = document.querySelector('.clients-track');
-  if (!track || track.dataset.duplicated === 'true') return;
+    const track = document.querySelector('.clients-track');
+    if (!track || track.dataset.duplicated === 'true') return;
 
-  const clones = track.cloneNode(true);
-  // Move children from the clone into the original as aria-hidden clones
-  Array.from(clones.children).forEach(node => {
-    const clone = node.cloneNode(true);
-    clone.setAttribute('aria-hidden', 'true');
-    track.appendChild(clone);
-  });
+    const clones = track.cloneNode(true);
+    // Move children from the clone into the original as aria-hidden clones
+    Array.from(clones.children).forEach(node => {
+        const clone = node.cloneNode(true);
+        clone.setAttribute('aria-hidden', 'true');
+        track.appendChild(clone);
+    });
 
-  track.dataset.duplicated = 'true';
+    track.dataset.duplicated = 'true';
 })();

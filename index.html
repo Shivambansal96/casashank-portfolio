@@ -5,23 +5,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description"
-        content="Hi there, I'm Sashank Agarwal, a Chartered Accountant in Siliguri offering income tax, GST, audit, accounting and financial advisory services for individuals and businesses.">
+        content="Sashank Agarwal &amp; Co is a Chartered Accountant practice in Siliguri, offering income tax, GST, audit, accounting and financial advisory services.">
     <meta name="author" content="Sashank Agarwal">
-    <title>Sashank Agarwal | Chartered Accountant in Siliguri</title>
+    <title>Sashank Agarwal &amp; Co | Chartered Accountant in Siliguri</title>
     <link rel="canonical" href="https://casashankagarwal.vercel.app/">
     <meta property="og:type" content="website">
     <meta property="og:locale" content="en_IN">
-    <meta property="og:title" content="Sashank Agarwal | Chartered Accountant in Siliguri">
+    <meta property="og:title" content="Sashank Agarwal &amp; Co | Chartered Accountant in Siliguri">
     <meta property="og:description"
-        content="Income tax, GST, audit, accounting and financial advisory for individuals and businesses in Siliguri.">
+        content="Sashank Agarwal &amp; Co provides income tax, GST, audit, accounting and financial advisory in Siliguri.">
     <meta property="og:url" content="https://casashankagarwal.vercel.app/">
     <meta property="og:image" content="https://casashankagarwal.vercel.app/assets/ca_logo.png">
     <meta property="og:image:width" content="594">
     <meta property="og:image:height" content="420">
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="Sashank Agarwal | Chartered Accountant in Siliguri">
+    <meta name="twitter:title" content="Sashank Agarwal &amp; Co | Chartered Accountant in Siliguri">
     <meta name="twitter:description"
-        content="Income tax, GST, audit, accounting and financial advisory for individuals and businesses in Siliguri.">
+        content="Sashank Agarwal &amp; Co provides income tax, GST, audit, accounting and financial advisory in Siliguri.">
     <meta name="twitter:image" content="https://casashankagarwal.vercel.app/assets/ca_logo.png">
     <link rel="stylesheet" href="style.css">
 
@@ -43,31 +43,69 @@
     <script type="application/ld+json">
         {
             "@context": "https://schema.org",
-            "@type": "Person",
-            "@id": "https://casashankagarwal.vercel.app/#person",
-            "name": "Sashank Agarwal",
-            "url": "https://casashankagarwal.vercel.app/",
-            "jobTitle": "Chartered Accountant",
-            "description": "Chartered Accountant in Siliguri providing income tax, GST, audit, accounting and financial advisory services.",
-            "email": "Sashank.caoffice@gmail.com",
-            "telephone": "+91-96431-41416",
-            "sameAs": [
-                "https://www.linkedin.com/in/sashank-agarwal-8a3023134/"
-            ],
-            "address": {
-                "@type": "PostalAddress",
-                "streetAddress": "Landmark Residency, Near Sachitra Bhawan, Iskon Mandir Road",
-                "addressLocality": "Siliguri",
-                "addressRegion": "West Bengal",
-                "postalCode": "734001",
-                "addressCountry": "IN"
-            },
-            "knowsAbout": [
-                "Income tax planning",
-                "GST compliance",
-                "Audit and assurance",
-                "Accounting and bookkeeping",
-                "Financial advisory"
+            "@graph": [
+                {
+                    "@type": "Person",
+                    "@id": "https://casashankagarwal.vercel.app/#person",
+                    "name": "Sashank Agarwal",
+                    "url": "https://casashankagarwal.vercel.app/",
+                    "jobTitle": "Chartered Accountant",
+                    "worksFor": { "@id": "https://casashankagarwal.vercel.app/#accounting-service" },
+                    "sameAs": [
+                        "https://www.linkedin.com/in/sashank-agarwal-8a3023134/"
+                    ],
+                    "knowsAbout": [
+                        "Income tax planning",
+                        "GST compliance",
+                        "Audit and assurance",
+                        "Accounting and bookkeeping",
+                        "Financial advisory"
+                    ]
+                },
+                {
+                    "@type": "AccountingService",
+                    "@id": "https://casashankagarwal.vercel.app/#accounting-service",
+                    "name": "Sashank Agarwal & Co",
+                    "alternateName": "CA Sashank Agarwal & Company",
+                    "url": "https://casashankagarwal.vercel.app/",
+                    "image": "https://casashankagarwal.vercel.app/assets/ca_logo.png",
+                    "description": "Chartered Accountant practice in Siliguri offering income tax, GST, audit, accounting and financial advisory services.",
+                    "provider": { "@id": "https://casashankagarwal.vercel.app/#person" },
+                    "email": "Sashank.caoffice@gmail.com",
+                    "telephone": "+91-96431-41416",
+                    "address": {
+                        "@type": "PostalAddress",
+                        "streetAddress": "Landmark Residency, Near Sachitra Bhawan, Iskon Mandir Road",
+                        "addressLocality": "Siliguri",
+                        "addressRegion": "West Bengal",
+                        "postalCode": "734001",
+                        "addressCountry": "IN"
+                    },
+                    "areaServed": {
+                        "@type": "City",
+                        "name": "Siliguri"
+                    },
+                    "openingHoursSpecification": {
+                        "@type": "OpeningHoursSpecification",
+                        "dayOfWeek": [
+                            "https://schema.org/Monday",
+                            "https://schema.org/Tuesday",
+                            "https://schema.org/Wednesday",
+                            "https://schema.org/Thursday",
+                            "https://schema.org/Friday",
+                            "https://schema.org/Saturday"
+                        ],
+                        "opens": "10:00",
+                        "closes": "21:00"
+                    },
+                    "serviceType": [
+                        "Income tax planning and filing",
+                        "GST registration and compliance",
+                        "Audit and assurance",
+                        "Accounting and bookkeeping",
+                        "Financial advisory"
+                    ]
+                }
             ]
         }
     </script>
@@ -305,7 +343,7 @@
                 <span class="gradient-text">Chartered Accountant Services</span>
             </h2>
             <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">
-                Looking for a CA in Siliguri? Sashank Agarwal assists individuals, professionals, startups, and
+                Looking for a CA in Siliguri? Sashank Agarwal &amp; Co assists individuals, professionals, startups, and
                 businesses with income tax returns, GST registration and filing, audit support, company formation,
                 accounting, payroll, and financial planning.
             </p>

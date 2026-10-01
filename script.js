@@ -7,13 +7,14 @@ document.addEventListener('DOMContentLoaded', function () {
     initScrollEffects();
     init3DTilt();
     initChangingText();
-    initSeamlessMarquees();
     initClientLogos();
 });
 
 
 function initChangingText() {
     const changingText = document.getElementById('changingText');
+    if (!changingText) return;
+
     const texts = [
         'Tax Expert',
         'Audit Professional',
@@ -22,6 +23,12 @@ function initChangingText() {
         'Compliance Specialist',
         'Business Partner'
     ];
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        changingText.textContent = texts[0];
+        return;
+    }
+
     let currentIndex = 0;
     let charIndex = 0;
     let isDeleting = false;
@@ -62,23 +69,6 @@ function initChangingText() {
 
 
     typeText();
-}
-
-// Initialize seamless marquees for services and clients
-function initSeamlessMarquees() {
-    // Services Marquee
-    const servicesMarquee = document.getElementById('servicesMarquee');
-    if (servicesMarquee) {
-        const servicesContent = servicesMarquee.innerHTML;
-        servicesMarquee.innerHTML = servicesContent + servicesContent;
-    }
-
-    // Clients Track
-    const clientsTrack = document.getElementById('clientsTrack');
-    if (clientsTrack) {
-        const clientsContent = clientsTrack.innerHTML;
-        clientsTrack.innerHTML = clientsContent + clientsContent;
-    }
 }
 
 function initClientLogos() {
@@ -611,9 +601,18 @@ function updateOfficeStatus() {
 
 
     const now = new Date();
-    const day = now.getDay(); // 0 = Sunday, 6 = Saturday
-    const hours = now.getHours();
-    const minutes = now.getMinutes();
+    const officeTimeParts = Object.fromEntries(
+        new Intl.DateTimeFormat('en-US', {
+            timeZone: 'Asia/Kolkata',
+            weekday: 'short',
+            hour: '2-digit',
+            minute: '2-digit',
+            hourCycle: 'h23'
+        }).formatToParts(now).map(part => [part.type, part.value])
+    );
+    const day = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].indexOf(officeTimeParts.weekday);
+    const hours = Number(officeTimeParts.hour);
+    const minutes = Number(officeTimeParts.minute);
     const currentTime = hours * 60 + minutes;
 
 
@@ -631,7 +630,7 @@ function updateOfficeStatus() {
     } else if (day === 6) {
         // Saturday: 10 AM - 9 PM
         const openTime = 10 * 60; // 10:00 AM
-        const closeTime = 22 * 60; // 9:00 PM
+        const closeTime = 21 * 60; // 9:00 PM
 
 
         if (currentTime >= openTime && currentTime < closeTime) {
@@ -646,7 +645,7 @@ function updateOfficeStatus() {
     } else {
         // Monday - Friday: 10 AM - 9 PM
         const openTime = 10 * 60; // 10:00 AM
-        const closeTime = 22 * 60; // 9:00 PM
+        const closeTime = 21 * 60; // 9:00 PM
 
 
         if (currentTime >= openTime && currentTime < closeTime) {

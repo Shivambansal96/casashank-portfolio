@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
     init3DTilt();
     initChangingText();
     initSeamlessMarquees();
+    initClientLogos();
 });
 
 
@@ -80,6 +81,23 @@ function initSeamlessMarquees() {
     }
 }
 
+function initClientLogos() {
+    document.querySelectorAll('.client-logo img').forEach(image => {
+        const showFallback = () => {
+            const fallback = document.createElement('span');
+            fallback.className = 'client-logo-fallback';
+            fallback.textContent = image.alt || 'Client logo';
+            image.replaceWith(fallback);
+        };
+
+        if (image.complete && image.naturalWidth === 0) {
+            showFallback();
+        } else {
+            image.addEventListener('error', showFallback, { once: true });
+        }
+    });
+}
+
 
 // Theme Management
 function initTheme() {
@@ -111,6 +129,7 @@ function initNavigation() {
     mobileMenuToggle.addEventListener('click', function () {
         this.classList.toggle('active');
         navMenu.classList.toggle('active');
+        this.setAttribute('aria-expanded', navMenu.classList.contains('active'));
     });
 
 
@@ -118,11 +137,21 @@ function initNavigation() {
         link.addEventListener('click', function () {
             mobileMenuToggle.classList.remove('active');
             navMenu.classList.remove('active');
+            mobileMenuToggle.setAttribute('aria-expanded', 'false');
 
 
             navLinks.forEach(l => l.classList.remove('active'));
             this.classList.add('active');
         });
+    });
+
+    document.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape' && navMenu.classList.contains('active')) {
+            mobileMenuToggle.classList.remove('active');
+            navMenu.classList.remove('active');
+            mobileMenuToggle.setAttribute('aria-expanded', 'false');
+            mobileMenuToggle.focus();
+        }
     });
 
 
@@ -389,19 +418,19 @@ const serviceDetails = {
         ]
     },
     13: {
-    title: 'Trust & NGO Services',
-    description: 'Specialized services for trusts, societies, and NGOs, focusing on proper structuring, registration, and regulatory compliance to help achieve your charitable goals effectively.',
-    features: [
-        'Formation and registration of Trusts, Societies, and NGOs',
-        'Compliance with FCRA, Income Tax, and other regulations',
-        'Maintenance of statutory records and returns',
-        'Financial statement preparation and audit support',
-        'Advisory on donations, grants, and CSR funding',
-        'Governance and internal control guidance',
-        'Assistance with 12A, 80G, and CSR registration',
-        'Strategic planning for sustainable growth'
-    ]
-},
+        title: 'Trust & NGO Services',
+        description: 'Specialized services for trusts, societies, and NGOs, focusing on proper structuring, registration, and regulatory compliance to help achieve your charitable goals effectively.',
+        features: [
+            'Formation and registration of Trusts, Societies, and NGOs',
+            'Compliance with FCRA, Income Tax, and other regulations',
+            'Maintenance of statutory records and returns',
+            'Financial statement preparation and audit support',
+            'Advisory on donations, grants, and CSR funding',
+            'Governance and internal control guidance',
+            'Assistance with 12A, 80G, and CSR registration',
+            'Strategic planning for sustainable growth'
+        ]
+    },
     14: {
         title: 'Foreign Investment Approvals',
         description: 'Expert guidance on FDI regulations, compliance, and approval processes in India.',
@@ -419,14 +448,17 @@ const serviceDetails = {
 };
 
 
+let lastModalTrigger = null;
+
 function openServiceModal(id) {
     const modal = document.getElementById('serviceModal');
     const modalBody = document.getElementById('modalBody');
     const service = serviceDetails[id];
+    lastModalTrigger = document.activeElement;
 
 
     modalBody.innerHTML = `
-        <h2 style="margin-bottom: 1rem; color: var(--text-primary);">${service.title}</h2>
+        <h2 id="modalTitle" style="margin-bottom: 1rem; color: var(--text-primary);">${service.title}</h2>
         <p style="color: var(--text-secondary); margin-bottom: 2rem; line-height: 1.8;">${service.description}</p>
         <h3 style="margin-bottom: 1rem; color: var(--text-primary);">Key Services:</h3>
         <ul style="list-style: none; padding: 0;">
@@ -438,7 +470,7 @@ function openServiceModal(id) {
             `).join('')}
         </ul>
         <div style="margin-top: 2rem; text-align: center;">
-            <a href="#contact" class="btn btn-primary" onclick="closeServiceModal()">
+            <a href="#contact" class="btn btn-primary" onclick="closeServiceModal(false)">
                 <i class="fas fa-envelope"></i> Get Started
             </a>
         </div>
@@ -446,18 +478,48 @@ function openServiceModal(id) {
 
 
     modal.classList.add('active');
+    modal.setAttribute('aria-hidden', 'false');
+    modal.querySelector('.modal-close').focus();
 }
 
 
-function closeServiceModal() {
+function closeServiceModal(restoreFocus = true) {
     const modal = document.getElementById('serviceModal');
     modal.classList.remove('active');
+    modal.setAttribute('aria-hidden', 'true');
+
+    if (restoreFocus && lastModalTrigger instanceof HTMLElement) {
+        lastModalTrigger.focus();
+    }
 }
 
 
-document.getElementById('serviceModal').addEventListener('click', function (e) {
+const serviceModal = document.getElementById('serviceModal');
+
+serviceModal.addEventListener('click', function (e) {
     if (e.target === this) {
         closeServiceModal();
+    }
+});
+
+serviceModal.addEventListener('keydown', function (event) {
+    if (event.key === 'Escape') {
+        closeServiceModal();
+        return;
+    }
+
+    if (event.key === 'Tab' && this.classList.contains('active')) {
+        const focusableElements = this.querySelectorAll('button:not([disabled]), a[href], [tabindex="0"]');
+        const firstElement = focusableElements[0];
+        const lastElement = focusableElements[focusableElements.length - 1];
+
+        if (event.shiftKey && document.activeElement === firstElement) {
+            event.preventDefault();
+            lastElement.focus();
+        } else if (!event.shiftKey && document.activeElement === lastElement) {
+            event.preventDefault();
+            firstElement.focus();
+        }
     }
 });
 
